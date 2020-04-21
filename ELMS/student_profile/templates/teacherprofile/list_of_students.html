@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags crispy_forms_filters %}
+{% load static %}
+
+{% block content %}
+{% include 'navbar.html' %}
+{% if user.is_teacher %}
+<div class="profile" >
+  <div class="container" >
+    <div class="row">
+      {% include 'sidenav.html' %}
+      
+      <div class="col">
+        
+
+      </div>
+
+      <div class="col-md-12" style="margin-bottom: 3rem; ">
+        <form method="GET" class="align-left" style=" font-size: 14px;">
+                  {{ filter.form|crispy }}
+                  <button type="submit" class='btn btn-primary btn-block btn-sm' style="margin-bottom: 1rem;">
+                    <i class="fas fa-search" aria-hidden="false"></i>&nbspSearch</button>
+                </form>
+        <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+        
+            <div class="card-header">
+                <h6 class="text-muted">List of Students</h6>
+            </div>
+            
+            <div class="card-body" >
+
+                
+             
+              
+                <table class="table table-sm mb-0" style="font-size: 14px;">
+                    <thead class="table">
+                      <tr class="bg-info text-light">
+                       
+                        <th scope="col">Name of Students</th>
+                        <th scope="col">Program</th>
+                        <th scope="col">Sections</th>
+                      </tr>
+                    </thead>
+                    {% for list in filter.qs %}
+                    <tbody>
+                      <tr>
+                    
+                        <td class="font-weight-bold">{{ list.last_name }}, {{ list.first_name }} {{ list.middle_name }}</td>
+                        <td>{{ list.program }}</td>
+                        <td>{{ list.section }}</td>
+                      {% empty %}
+                        <div class="alert alert-danger" role="alert">
+                          No available students found in this sections
+                        </div>
+                      </tr>
+                      
+                    </tbody>
+                    {% endfor %}
+                  </table>
+                
+             
+            </div>
+           
+          </div>
+          
+      </div>
+      <div class="col">
+        
+      </div>
+
+    </div>
+  </div>
+  </div>
+{% endif %}
+{% include 'footer.html' %}
+{% endblock %}
